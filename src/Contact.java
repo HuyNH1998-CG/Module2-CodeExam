@@ -8,22 +8,31 @@ public class Contact {
     Scanner input = new Scanner(System.in);
     private final int nameSearch = 1;
     private final int phoneSearch = 2;
+    private final String cancel = "";
 
-    public void show(){
-        for(Phone p : danhBa){
+    public void show() {
+        for (Phone p : danhBa) {
             System.out.println(p);
             System.out.println("Nhập bất kì để xem tiếp");
             String answer = input.nextLine();
         }
     }
+
     public void addNew() {
         Phone temp = createContact();
+        if (temp == null) {
+            System.out.println("Hủy thêm mới");
+            return;
+        }
         danhBa.add(temp);
         System.out.println("Đã thêm một liên lạc mới vào danh bạ");
     }
 
     private Phone createContact() {
         String phone = getPhone("Nhập số điện thoại");
+        if (phone == null) {
+            return null;
+        }
         String group = getGroup();
         String name = getName();
         String gender = getGender();
@@ -37,6 +46,9 @@ public class Contact {
         while (true) {
             System.out.println(s);
             String phone = input.nextLine();
+            if (phone.equals(cancel)) {
+                return null;
+            }
             boolean exist = false;
             if (phone.matches("^\\d{2}-[0]\\d{9}$")) {
                 for (Phone p : danhBa) {
@@ -60,15 +72,7 @@ public class Contact {
             String email = input.nextLine();
             boolean exist = false;
             if (email.matches("^[\\S.]+@[\\S.]+$")) {
-                for (Phone p : danhBa) {
-                    if (p.getEmail().equals(email)) {
-                        System.out.println("Email đã tồn tại");
-                        exist = true;
-                    }
-                }
-                if (!exist) {
-                    return email;
-                }
+                return email;
             } else {
                 System.out.println("Nhập sai định dạng email");
             }
@@ -76,10 +80,10 @@ public class Contact {
     }
 
     private String getDateOfBirth() {
-        while (true){
+        while (true) {
             System.out.println("Nhập ngày sinh");
             String dateOfBirth = input.nextLine();
-            if(dateOfBirth.matches("^\\S+$")){
+            if (dateOfBirth.matches("^\\S+$")) {
                 return dateOfBirth;
             } else {
                 System.out.println("Phải nhập ít nhất 1 ký tự");
@@ -88,10 +92,10 @@ public class Contact {
     }
 
     private String getAddress() {
-        while (true){
+        while (true) {
             System.out.println("Nhập địa chỉ");
             String address = input.nextLine();
-            if(address.matches("^[\\S\\s]+$")){
+            if (address.matches("^[\\S\\s]+$")) {
                 return address;
             } else {
                 System.out.println("Phải nhập ít nhất 1 ký tự");
@@ -100,10 +104,10 @@ public class Contact {
     }
 
     private String getGender() {
-        while (true){
+        while (true) {
             System.out.println("Nhập giới tính");
             String gender = input.nextLine();
-            if(gender.matches("^[Nn][Aa][Mm]+|[Nn][Uu]$")){
+            if (gender.matches("^[Nn][Aa][Mm]+|[Nn][Uu]$")) {
                 return gender;
             } else {
                 System.out.println("Giới tính phải là nam hoặc nữ");
@@ -112,10 +116,10 @@ public class Contact {
     }
 
     private String getName() {
-        while(true){
+        while (true) {
             System.out.println("Nhập tên");
             String name = input.nextLine();
-            if(name.matches("^[\\S\\s]+")){
+            if (name.matches("^[\\S\\s]+")) {
                 return name;
             } else {
                 System.out.println("Phải nhập ít nhất một kí tự");
@@ -124,10 +128,10 @@ public class Contact {
     }
 
     private String getGroup() {
-        while(true){
+        while (true) {
             System.out.println("Nhập nhóm");
             String group = input.nextLine();
-            if(group.matches("^[\\S\\s]+")){
+            if (group.matches("^[\\S\\s]+")) {
                 return group;
             } else {
                 System.out.println("Phải nhập ít nhất một kí tự");
@@ -200,7 +204,7 @@ public class Contact {
                         found = true;
                     }
                 }
-                if(!found){
+                if (!found) {
                     System.out.println("Không tìm thấy");
                 }
             }
@@ -214,7 +218,7 @@ public class Contact {
                         found = true;
                     }
                 }
-                if(!found){
+                if (!found) {
                     System.out.println("Không tìm thấy");
                 }
             }
