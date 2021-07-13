@@ -11,10 +11,15 @@ public class Contact {
     private final String cancel = "";
 
     public void show() {
-        for (Phone p : danhBa) {
-            System.out.println(p);
-            System.out.println("Nhập bất kì để xem tiếp");
-            String answer = input.nextLine();
+        int count = 0;
+        for (int i = 0 ; i < danhBa.size(); i++){
+            System.out.println(danhBa.get(i));
+            count++;
+            if(count == 5){
+                System.out.println("Nhập bất kì để xem tiếp");
+                String answer = input.nextLine();
+                count = 0;
+            }
         }
     }
 
@@ -233,5 +238,3 @@ public class Contact {
         danhBa = IOOperator.readDataFromFile("E:\\Module2-CodeExam\\src\\Contact.csv");
     }
 }
-
-
